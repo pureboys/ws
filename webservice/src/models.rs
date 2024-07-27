@@ -4,8 +4,8 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Course {
-    pub teacher_id: usize,
-    pub id: Option<usize>,
+    pub teacher_id: i32,
+    pub id: Option<i32>,
     pub name: String,
     pub time: Option<NaiveDateTime>,
 }
@@ -13,8 +13,8 @@ pub struct Course {
 impl From<web::Json<Course>> for Course {
     fn from(course: web::Json<Course>) -> Self {
         Course {
-            teacher_id: course.teacher_id,
             id: course.id,
+            teacher_id: course.teacher_id,
             name: course.name.clone(),
             time: course.time,
         }

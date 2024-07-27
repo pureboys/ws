@@ -11,6 +11,8 @@ actix-rt = "2"
 serde = { version = "1.0.136", features = ["derive"] }
 chrono = { version = "0.4.19", features = ["serde"] }
 tokio = { version = "1.0.0", features = ["rt", "rt-multi-thread", "macros"] }
+dotenv = "0.15.0"
+sqlx = { version = "0.7.4", features = ["postgres", "macros", "runtime-tokio-rustls","chrono"] }
 
 
 [[bin]]
