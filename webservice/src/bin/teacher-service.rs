@@ -9,12 +9,14 @@ use crate::state::AppState;
 mod routers;
 #[path = "../state.rs"]
 mod state;
-#[path = "../handler.rs"]
-mod handler;
-#[path = "../models.rs"]
+#[path = "../handlers/mod.rs"]
+mod handlers;
+#[path = "../models/mod.rs"]
 mod models;
-#[path="../db_access.rs"]
-mod  db_access;
+#[path= "../db_access/mod.rs"]
+mod db_access;
+#[path="../errors.rs"]
+mod  errors;
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
