@@ -1,4 +1,4 @@
 [workspace]
 
-members = ["webservice"]
+members = [ "webapp","webservice"]
 resolver = "1"
