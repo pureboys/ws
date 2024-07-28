@@ -2,7 +2,8 @@ use std::{env, io};
 use std::sync::Mutex;
 use actix_web::{App, HttpServer, web};
 use dotenv::dotenv;
-use crate::routers::{course_routers, general_routers};
+use crate::errors::MyError;
+use crate::routers::{course_routers, general_routers, teacher_routes};
 use crate::state::AppState;
 
 #[path = "../routers.rs"]
@@ -32,7 +33,13 @@ async fn main() -> io::Result<()> {
         db: db_pool,
     });
     let app = move || {
-        App::new().app_data(shared_data.clone()).configure(general_routers).configure(course_routers)
+        App::new().app_data(shared_data.clone())
+            .app_data(
+                web::JsonConfig::default().error_handler(|_err, _req| {
+                    MyError::InvalidInput("Please provide valid json input".to_string()).into()
+                })
+            )
+            .configure(general_routers).configure(course_routers).configure(teacher_routes)
     };
 
     HttpServer::new(app).bind("127.0.0.1:3000")?.run().await

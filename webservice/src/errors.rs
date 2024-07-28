@@ -9,6 +9,7 @@ pub enum MyError {
     DBError(String),
     ActixError(String),
     NotFound(String),
+    InvalidInput(String),
 }
 
 impl From<SQLxError> for MyError {
@@ -38,6 +39,10 @@ impl MyError {
                 println!("Not Found error occured : {:?}", msg);
                 msg.into()
             }
+            MyError::InvalidInput(msg) => {
+                println!("Invalid parameters received: {:?}", msg);
+                msg.into()
+            }
         }
     }
 }
@@ -53,6 +58,7 @@ impl error::ResponseError for MyError {
         match self {
             MyError::DBError(_msg) | MyError::ActixError(_msg) => StatusCode::INTERNAL_SERVER_ERROR,
             MyError::NotFound(_msg) => StatusCode::NOT_FOUND,
+            MyError::InvalidInput(_msg) => StatusCode::BAD_REQUEST,
         }
     }
 
